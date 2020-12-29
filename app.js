@@ -1,8 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
-const Category = require("./controllers/Category");
-const Article = require("./controllers/Article");
+const CategoryController = require("./controllers/Category");
+const ArticleController = require("./controllers/Article");
+const Category = require("./models/Category");
+const Article = require("./models/Article");
+
 
 const app = express();
 const PORT = 3000;
@@ -23,8 +26,8 @@ connection
         console.log(`An unexpected error has occurred: ${err}`);
     });
 
-app.use('/', Category);
-app.use('/', Article);
+app.use('/', CategoryController);
+app.use('/', ArticleController);
 
 app.get('/', (req, res) => {
     res.render("index");
