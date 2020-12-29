@@ -24,4 +24,14 @@ router.post("/admin/category/save", (req, res) => {
     }
 });
 
+router.get("/admin/categories", (req, res) => {
+    Category
+        .findAll()
+        .then((categories) => {
+            res.render("admin/category/index", {
+                categories
+            })
+        });
+});
+
 module.exports = router;
