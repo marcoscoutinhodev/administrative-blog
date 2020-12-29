@@ -8,6 +8,7 @@
         <h2>Categories</h2>
 
         <a href="/admin/category/new"><button class="btn btn-success">Create New Category</button></a>
+        <hr>
 
         <table class="table table-bordered">
             <thead>
@@ -25,7 +26,7 @@
                         <td> <%= category.title %> </td>
                         <td> <%= category.slug %> </td>
                         <td>
-                            <button class="btn btn-warning">Edit</button>
+                            <a href="/admin/category/edit/<%= category.id %>"><button class="btn btn-warning">Edit</button></a>
                             <form action="/admin/category/delete" method="POST" style="display: inline" onsubmit="confirmDel(event, this)">
                                 <input type="hidden" name="id" value="<%= category.id %>">
                                 <button class="btn btn-danger">Delete</button>
