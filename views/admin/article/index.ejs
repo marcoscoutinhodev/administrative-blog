@@ -3,7 +3,39 @@
 <body>
     <%- include("../../partials/navbar.ejs") %> 
 
-    <h2>Teste</h2>
+    <div class="container">
+        <hr>
+        <h2>Articles</h2>
+        <a href="/admin/article/new"><button class="btn btn-success">Create New Article: </button></a>
+        <hr>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Slug</th>
+                    <th>Category</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% articles.forEach((article) => { %>
+                    <tr>
+                        <td> <%= article.id %> </td>
+                        <td> <%= article.title %> </td>
+                        <td> <%= article.slug %> </td>
+                        <td> <%= article.category.title %> </td>
+                        <td>
+                            <a href=""><button class="btn btn-warning">Edit</button></a>
+                            <a href=""><button class="btn btn-danger">Delete</button></a>
+                        </td>
+                    </tr>
+                <% }) %> 
+            </tbody>
+        </table>
+
+    </div>
 </body>
 
-<%- include("../../partials/footer.ejs") %> 
+<%- include("../../partials/footer.ejs") %>

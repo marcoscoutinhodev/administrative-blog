@@ -5,8 +5,17 @@ const Article = require("../models/Article");
 const slugify = require("slugify");
 
 router.get("/admin/articles", (req, res) => {
-    res.render("admin/article/index")
-})
+    Article
+        .findAll({
+            include: [ { model: Category } ]
+        })
+        .then((articles) => {
+            res.render("admin/article/index", { articles });
+        })
+        .catch((err) => {
+            console.log(`An unexpected error has occurred: ${err}`);
+        });
+});
 
 router.get("/admin/article/new", (req, res) => {
     Category
@@ -14,6 +23,9 @@ router.get("/admin/article/new", (req, res) => {
         .then((categories) => {
             res.render("admin/article/new", { categories });
         })
+        .catch((err) => {
+            console.log(`An unexpected error has occured: ${err}`);
+        });
 });
 
 router.post("/admin/article/save", (req, res) => {
