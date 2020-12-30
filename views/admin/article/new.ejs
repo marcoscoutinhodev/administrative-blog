@@ -19,7 +19,7 @@
                     <br />
                     <label>Category: </label>
                     <select name="category" class="form-control">
-                        <option value="-1">Select the category</option>
+                        <option value="0">Select the category *</option>
                         <% categories.forEach((category) => { %>
                             <option value="<%= category.id %> "><%= category.title %></option>
                         <% }) %> 

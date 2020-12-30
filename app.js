@@ -30,7 +30,35 @@ app.use('/', CategoryController);
 app.use('/', ArticleController);
 
 app.get('/', (req, res) => {
-    res.render("index");
+    Article
+        .findAll({
+            include: [{ model: Category }],
+            order: [ ["id", "desc"] ]
+        })
+        .then((articles) => {
+            res.render("index", { articles });
+        });
+});
+
+app.get("/:slug", (req, res) => {
+    const { slug } = req.params;
+
+    Article
+        .findOne({
+            where: {
+                slug
+            }
+        })
+        .then((article) => {
+            if(article) {
+                res.render("article", { article });
+            } else {
+                res.redirect('/');
+            }
+        })
+        .catch((err) => {
+            console.log(`An unexpected error has occurred: ${err}`);
+        });
 });
 
 app.listen(PORT, () => {

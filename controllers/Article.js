@@ -31,7 +31,8 @@ router.get("/admin/article/new", (req, res) => {
 router.post("/admin/article/save", (req, res) => {
     const { title, body, category } = req.body;
 
-    Article
+    if(title && body && category > 0) {
+        Article
         .create({
             title,
             slug: slugify(title),
@@ -44,6 +45,9 @@ router.post("/admin/article/save", (req, res) => {
         .catch((err) => {
             console.log(`An unexpected error has occurred: ${err}`);
         });
+    } else {
+        res.redirect("/admin/articles");
+    }
 });
 
 router.post("/admin/article/delete", (req, res) => {
