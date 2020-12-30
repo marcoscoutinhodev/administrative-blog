@@ -46,4 +46,63 @@ router.post("/admin/article/save", (req, res) => {
         });
 });
 
+router.post("/admin/article/delete", (req, res) => {
+    const { id } = req.body;
+
+    if(id) {
+        Article
+            .destroy({
+                where: {
+                    id
+                }
+            })
+            .then(() => {
+                res.redirect("/admin/articles");
+            })
+            .catch((err) => {
+                console.log(`An unexpected error has occurred: ${err}`);
+            });
+    } else {
+        res.redirect("/admin/articles");
+    }
+});
+
+router.get("/admin/article/edit/:id", (req, res) => {
+    const { id } = req.params;
+
+    if(!isNaN(id)) {
+        Article
+            .findByPk(id, { include: [{ model: Category }] })
+            .then((article) => {
+                if(article) {
+                    res.render("admin/article/edit", { article });
+                } else {
+                    res.redirect("/admin/articles");
+                }
+            })
+            .catch((err) => {
+                console.log(`An unexpected error has occurred: ${err}`);
+            })
+    } else {
+        res.redirect("/admin/articles");
+    }
+});
+
+router.post("/admin/article/update", (req, res) => {
+    const { id, title, body } = req.body;
+
+    Article
+        .update({ title, slug: slugify(title), body }, {
+            where: {
+                id
+            }
+        })
+    .then(() => {
+        res.redirect("/admin/articles");
+    })
+    .catch((err) => {
+        console.log(`An unexpected error has occurred: ${err}`);
+    });
+});
+
 module.exports = router;

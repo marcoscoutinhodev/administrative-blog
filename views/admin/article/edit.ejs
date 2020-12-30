@@ -1,0 +1,41 @@
+<%- include("../../partials/header.ejs") %>
+
+<body>
+    <%- include("../../partials/navbar.ejs") %> 
+
+    <div class="container">
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <h2>Article Edit: </h2>
+            </div>
+
+            <div class="card-body">
+                <form action="/admin/article/update" method="POST">
+                    <input type="hidden" name="id" value="<%= article.id %> ">
+                    <input class="form-control" type="text" name="title" placeholder="Enter the new title" value="<%= article.title %> ">
+                    <br />
+                    <textarea class="form-control" name="body" placeholder="Type the article" id="article"><%= article.body %> </textarea>
+                    <br />
+                    <label>Category: </label>
+                    <input type="text" value="<%= article.category.title %>" disabled>
+                    <br />
+                    <br />
+                    <button type="submit" class="btn btn-success">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: "#article",
+            plugins: [
+                "advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons"
+            ]
+        });
+    </script>
+</body>
+
+<%- include("../../partials/footer.ejs") %>

@@ -27,8 +27,12 @@
                         <td> <%= article.slug %> </td>
                         <td> <%= article.category.title %> </td>
                         <td>
-                            <a href=""><button class="btn btn-warning">Edit</button></a>
-                            <a href=""><button class="btn btn-danger">Delete</button></a>
+                            <a href="/admin/article/edit/<%= article.id %> "><button class="btn btn-warning">Edit</button></a>
+                            
+                            <form action="/admin/article/delete" method="POST" style="display: inline;" onsubmit="confirmDel(event, this)">
+                                <input type="hidden" name="id" value="<%= article.id %> ">
+                                <a href="/admin/article/delete"><button class="btn btn-danger">Delete</button></a>
+                            </form>
                         </td>
                     </tr>
                 <% }) %> 
@@ -36,6 +40,18 @@
         </table>
 
     </div>
+
+    <script>
+        function confirmDel(event, form) {
+            event.preventDefault();
+            
+            const option = confirm("Delete Article?");
+    
+            if(option) {
+                form.submit();
+            }
+        }
+    </script>
 </body>
 
 <%- include("../../partials/footer.ejs") %>
